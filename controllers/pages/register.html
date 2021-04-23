@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        .form {
+            width: 600px;
+            margin: 15px auto 0;
+        }
+        .links a{
+            text-decoration: none;
+            color: darkcyan;
+        }
+        .links a:hover{
+            text-decoration: underline;
+            color: brown;
+        }
+    </style>
+    <title>注册账号</title>
+</head>
+<body>
+<div class="form">
+    <form method="post" action="/" onsubmit="return submitForm(this)">
+        登录用户名:
+        <br><input type="text" name="username"/><br><br>
+        密码（大于等于六位）:
+        <br><input type="password" name="pass1"/><br><br>
+        再次输入密码:
+        <br><input type="password" name="pass2"/><br><br>
+        Email:
+        <br><input type="text" name="email"/>邮箱可找回密码和修改密码<br><br>
+        <input type="submit" value="确定注册"/>
+    </form>
+    <div class="links">
+        <p>[<a target="_blank" href="">下载客户端</a>] [<a target="_blank" href="">下载补丁</a>]</p>
+    </div>
+</div>
+<script src="//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script type="text/javascript">
+    function submitForm(formEl) {
+        var pass1Val = formEl.pass1.value;
+        var pass2Val = formEl.pass2.value;
+        if (pass1Val != pass2Val) {
+            alert("两次输入的密码不相同");
+            return false;
+        }
+        var postData = {
+            username: formEl.username.value,
+            password: pass1Val,
+            email: formEl.email.value
+        }
+        axios.post('/api/auth/register', postData)
+            .then(function (res) {
+                var response = res.data
+                if (response.code !== 0) {
+                    alert(response.message)
+                } else {
+                    alert("注册成功")
+                }
+            })
+            .catch(function (error) {
+                alert(error.toString())
+            });
+        return false;
+    }
+</script>
+</body>
+</html>
