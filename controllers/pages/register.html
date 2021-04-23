@@ -7,19 +7,40 @@
             width: 600px;
             margin: 15px auto 0;
         }
-        .links a{
+        .form .error-tip{
+            border: 1px solid #daa4a4;
+            color: red;
+            margin-bottom: 8px;
+            padding: 12px 5px;
+        }
+
+        .links a {
             text-decoration: none;
             color: darkcyan;
         }
-        .links a:hover{
+
+        .links a:hover {
             text-decoration: underline;
             color: brown;
+        }
+
+        .links .url-area p {
+            margin-top: 5px;
+            padding: 32px 28px;
+            border: 1px solid #ccc;
+            line-height: 1.5;
+            color: #19caff;
+        }
+
+        .links .url-area p.patch-url {
+            color: #65bfbf;
         }
     </style>
     <title>注册账号</title>
 </head>
 <body>
 <div class="form">
+    <div class="error-tip" style="display:none;"></div>
     <form method="post" action="/" onsubmit="return submitForm(this)">
         登录用户名:
         <br><input type="text" name="username"/><br><br>
@@ -32,16 +53,21 @@
         <input type="submit" value="确定注册"/>
     </form>
     <div class="links">
-        <p>[<a target="_blank" href="">下载客户端</a>] [<a target="_blank" href="">下载补丁</a>]</p>
+        <p>[<a href="javascript:;" onclick="showClientUrl()">下载客户端</a>] [<a href="javascript:;"
+                                                                            onclick="showPatchUrl()">下载补丁</a>]</p>
+        <div class="url-area">
+            <p style="display: none;" class="client-url">链接: https://pan.baidu.com/s/1pCin61c2oDngjSpgaghdhw 提取码: cu2t</p>
+            <p style="display: none;" class="patch-url">链接: https://pan.baidu.com/s/139vTewGUSpR1UqLlh2_a7A 提取码: be7h</p>
+        </div>
     </div>
 </div>
-<script src="//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script type="text/javascript">
     function submitForm(formEl) {
         var pass1Val = formEl.pass1.value;
         var pass2Val = formEl.pass2.value;
         if (pass1Val != pass2Val) {
-            alert("两次输入的密码不相同");
+            showErrorMessage("两次输入的密码不相同");
             return false;
         }
         var postData = {
@@ -53,15 +79,38 @@
             .then(function (res) {
                 var response = res.data
                 if (response.code !== 0) {
-                    alert(response.message)
+                    showErrorMessage(response.message)
                 } else {
                     alert("注册成功")
                 }
             })
             .catch(function (error) {
-                alert(error.toString())
+                showErrorMessage(error.toString())
             });
         return false;
+    }
+
+    function showClientUrl() {
+        var clientArea = document.getElementsByClassName("client-url").item(0);
+        var patchArea = document.getElementsByClassName("patch-url").item(0);
+        clientArea.style.display = "block";
+        patchArea.style.display = "none";
+    }
+
+    function showPatchUrl() {
+        var clientArea = document.getElementsByClassName("client-url").item(0);
+        var patchArea = document.getElementsByClassName("patch-url").item(0);
+        clientArea.style.display = "none";
+        patchArea.style.display = "block";
+    }
+
+    function showErrorMessage(str) {
+        var tipEl = document.getElementsByClassName("error-tip").item(0);
+        tipEl.innerHTML = str;
+        tipEl.style.display = "block";
+        setTimeout(function () {
+            tipEl.style.display = "none";
+        }, 1300);
     }
 </script>
 </body>
