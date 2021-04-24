@@ -23,18 +23,6 @@
             text-decoration: underline;
             color: brown;
         }
-
-        .links .url-area p {
-            margin-top: 5px;
-            padding: 32px 28px;
-            border: 1px solid #ccc;
-            line-height: 1.5;
-            color: #19caff;
-        }
-
-        .links .url-area p.patch-url {
-            color: #65bfbf;
-        }
     </style>
     <title>注册账号</title>
 </head>
@@ -53,12 +41,8 @@
         <input type="submit" value="确定注册"/>
     </form>
     <div class="links">
-        <p>[<a href="javascript:;" onclick="showClientUrl()">下载客户端</a>] [<a href="javascript:;"
-                                                                            onclick="showPatchUrl()">下载补丁</a>]</p>
-        <div class="url-area">
-            <p style="display: none;" class="client-url">链接: https://pan.baidu.com/s/1pCin61c2oDngjSpgaghdhw 提取码: cu2t</p>
-            <p style="display: none;" class="patch-url">链接: https://pan.baidu.com/s/139vTewGUSpR1UqLlh2_a7A 提取码: be7h</p>
-        </div>
+        <p>[<a target="_blank" href="https://liuguangw-my.sharepoint.com/:u:/g/personal/admin_ms_liuguang_vip/Ecc4tnwToF5NvT_iUN2lPWoB8EMVjp4mWnYUVyzxji58Dw?e=C6wzc1">下载客户端</a>]
+            [<a target="_blank" href="https://liuguangw-my.sharepoint.com/:u:/g/personal/admin_ms_liuguang_vip/EZXugTrILkpMjnKvC4QmJ9kBLGR64I9iJL0AG8IBdVkFLA?e=vvK2Zd">下载补丁</a>]</p>
     </div>
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -88,20 +72,6 @@
                 showErrorMessage(error.toString())
             });
         return false;
-    }
-
-    function showClientUrl() {
-        var clientArea = document.getElementsByClassName("client-url").item(0);
-        var patchArea = document.getElementsByClassName("patch-url").item(0);
-        clientArea.style.display = "block";
-        patchArea.style.display = "none";
-    }
-
-    function showPatchUrl() {
-        var clientArea = document.getElementsByClassName("client-url").item(0);
-        var patchArea = document.getElementsByClassName("patch-url").item(0);
-        clientArea.style.display = "none";
-        patchArea.style.display = "block";
     }
 
     function showErrorMessage(str) {
